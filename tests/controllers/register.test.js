@@ -13,6 +13,9 @@ const {
       computeHash,
     },
   },
+  models: {
+    UserModel,
+  },
 } = require('../env');
 
 const { userToRegister } = require('./args');
@@ -39,7 +42,7 @@ describe('user', () => {
 
   describe('computeHash', () => {
     before(() => {
-      hash = computeHash(password, salt);
+      hash = computeHash(userToRegister.password, salt);
       userToRegister.password = hash;
     });
 
@@ -60,8 +63,27 @@ describe('user', () => {
       expect(response).to.be.ok;
     });
 
-    it('should return insert user to database', () => {
-      expect(response).to.have.property('upsert');
+    it('should return new user document', () => {
+      expect(response[0]).to.have.property('password');
+      expect(response[0]).to.have.property('email');
+      expect(response[0]).to.have.property('gender');
+      expect(response[0]).to.have.property('salt');
+    });
+
+    it('should catch duplicate emails', async () => {
+      const duplicate = await register(userToRegister);
+      console.log(duplicate);
+    });
+  });
+
+  describe('cleaning up', () => {
+    it('deleted test user from database', async () => {
+      const dbResponse = await UserModel.deleteMany({
+        password: userToRegister.password,
+        email: userToRegister.email,
+      });
+
+      expect(dbResponse.ok).to.be.equal(1);
     });
   });
 });

@@ -7,8 +7,13 @@ const UserModel = mongoose.model('User', UserSchema);
 
 const { log } = require('../utils/logger');
 
-async function register(event) {
-  return UserModel.insertMany(event);
+async function register(user) {
+  return UserModel.findOneAndUpdate(
+    { email: user.email },
+    {
+      $set: user,
+    },
+  );
 }
 
 module.exports = {

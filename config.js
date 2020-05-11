@@ -14,7 +14,9 @@ if (!MONGO_URI) {
 mongoose.Promise = global.Promise;
 
 mongoose.connect(MONGO_URI,{
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useFindAndModify: false,
 });
 mongoose.connection
   .once('open', () => {
