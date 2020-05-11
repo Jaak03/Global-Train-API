@@ -5,15 +5,29 @@ const { createSalt, computeHash } = require('../helpers/auth');
 
 const UserModel = mongoose.model('User', UserSchema);
 
-const { log } = require('../utils/logger');
-
 async function register(user) {
-  return UserModel.findOneAndUpdate(
-    { email: user.email },
-    {
-      $set: user,
-    },
-  );
+  try {
+    const newUser = user;
+
+    newUser.salt = createSalt();
+    newUser.password = computeHash(newUser.password, newUser.salt);
+
+    await UserModel.insertMany(newUser);
+    return {
+      msg: 'Successfully registered new user.',
+      user,
+    };
+  } catch (e) {
+    if (e.code === 11000) {
+      return {
+        msg: 'That email is already linked to an account',
+      };
+    }
+
+    return {
+      msg: 'Could not register new user.',
+    };
+  }
 }
 
 module.exports = {

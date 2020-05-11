@@ -26,7 +26,6 @@ describe('user', () => {
 
   before(() => {
     salt = createSalt();
-    userToRegister.salt = salt;
   });
 
   describe('createSalt', () => {
@@ -43,7 +42,6 @@ describe('user', () => {
   describe('computeHash', () => {
     before(() => {
       hash = computeHash(userToRegister.password, salt);
-      userToRegister.password = hash;
     });
 
     it('expect a string response', () => {
@@ -64,22 +62,26 @@ describe('user', () => {
     });
 
     it('should return new user document', () => {
-      expect(response[0]).to.have.property('password');
-      expect(response[0]).to.have.property('email');
-      expect(response[0]).to.have.property('gender');
-      expect(response[0]).to.have.property('salt');
+      expect(response.user).to.have.property('username');
+      expect(response.user).to.have.property('password');
+      expect(response.user).to.have.property('email');
+      expect(response.user).to.have.property('gender');
+      expect(response.user).to.have.property('salt');
+    });
+
+    it('should return success message', () => {
+      expect(response.msg).to.equal('Successfully registered new user.');
     });
 
     it('should catch duplicate emails', async () => {
-      const duplicate = await register(userToRegister);
-      console.log(duplicate);
+      const dbResponse = await register(userToRegister);
+      expect(dbResponse.msg).to.equal('That email is already linked to an account');
     });
   });
 
   describe('cleaning up', () => {
     it('deleted test user from database', async () => {
       const dbResponse = await UserModel.deleteMany({
-        password: userToRegister.password,
         email: userToRegister.email,
       });
 
