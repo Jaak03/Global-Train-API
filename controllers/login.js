@@ -7,7 +7,9 @@ const UserModel = mongoose.model('User', UserSchema);
 const { computeHash } = require('../helpers/auth');
 
 async function findUserInDatabase(email) {
-  return UserModel.findOne({ email });
+  return UserModel.findOne(
+    { email },
+  );
 }
 
 function checkPassword(attemptedPassword, userAuth) {

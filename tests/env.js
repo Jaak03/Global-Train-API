@@ -24,7 +24,7 @@ const {
 const { UserSchema } = require('../models/schemas/user');
 
 // HELPERS
-const { createSalt, computeHash } = require('../helpers/auth');
+const { createSalt, computeHash, createToken } = require('../helpers/auth');
 
 module.exports = {
   utils: {
@@ -35,6 +35,7 @@ module.exports = {
     auth: {
       createSalt,
       computeHash,
+      createToken,
     },
   },
   controllers: {

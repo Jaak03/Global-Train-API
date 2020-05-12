@@ -6,11 +6,16 @@ const { expect } = require('chai');
 const {
   controllers: {
     register,
+    login: {
+      // checkPassword,
+      findUserInDatabase,
+    },
   },
   helpers: {
     auth: {
       createSalt,
       computeHash,
+      createToken,
     },
   },
   models: {
@@ -51,6 +56,7 @@ describe('user', () => {
 
   describe('register', () => {
     let response;
+    let user;
 
     before(async function () {
       this.timeout(5000);
@@ -75,10 +81,25 @@ describe('user', () => {
     });
   });
 
-  describe('login', () => {
-    let user;
+  describe('findUserInDatabase', () => {
+    it('find user based on email', async () => {
+      user = await findUserInDatabase(userToRegister.email);
+      expect(user).to.have.property('_id');
+    });
+  });
+
+  describe('createToken', () => {
+    let token;
     before(() => {
-      user = 'tets';
+      token = createToken(user);
+    });
+
+    it('token should be ok', () => {
+      expect(token).to.be.ok;
+    });
+
+    it('token should be string', () => {
+      expect(typeof token).to.equal('string');
     });
   });
 

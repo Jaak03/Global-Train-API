@@ -22,7 +22,12 @@ const signOptions = {
 };
 
 function createToken(user) {
-  return jwt.sign(user, keys.private, signOptions);
+  const { _id, email, gender } = user;
+  return jwt.sign({
+    _id,
+    email,
+    gender,
+  }, keys.private, signOptions);
 }
 
 
