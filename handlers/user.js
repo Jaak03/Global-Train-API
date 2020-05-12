@@ -1,6 +1,6 @@
 const {
   register,
-  login
+  login,
 } = require('../controllers');
 
 module.exports = {

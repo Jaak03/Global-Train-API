@@ -9,5 +9,5 @@ const UserSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  UserSchema
+  UserSchema,
 };

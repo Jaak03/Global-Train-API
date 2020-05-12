@@ -1,1 +1,1 @@
-require('./register.test');
+require('./user.test');

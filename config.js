@@ -4,16 +4,11 @@ const { log } = require('./utils/logger');
 
 mongoose.Promise = Promise;
 
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  log('You must provide a MongoDB URI');
-  return;
-}
+const { MONGO_URI } = process.env;
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(MONGO_URI,{
+mongoose.connect(MONGO_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -25,6 +20,3 @@ mongoose.connection
   .on('error', (e) => {
     log(`mongoose.error: ${JSON.stringify(e)}`);
   });
-
-
-  
