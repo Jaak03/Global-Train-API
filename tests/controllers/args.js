@@ -1,8 +1,8 @@
 const userToRegister = {
-  username: 'jaak',
-  password: '123l42',
+  username: 'asdgafh3sv',
+  password: '234982hruhwfkjwer123',
   gender: 'm',
-  email: 'jaak1@toets.com',
+  email: 'asds4t6w@asadf.com',
 };
 
 module.exports = {

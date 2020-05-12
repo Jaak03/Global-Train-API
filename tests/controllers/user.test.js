@@ -61,12 +61,8 @@ describe('user', () => {
       expect(response).to.be.ok;
     });
 
-    it('should return new user document', () => {
-      expect(response.user).to.have.property('username');
-      expect(response.user).to.have.property('password');
-      expect(response.user).to.have.property('email');
-      expect(response.user).to.have.property('gender');
-      expect(response.user).to.have.property('salt');
+    it('should return new user email', () => {
+      expect(response).to.have.property('email');
     });
 
     it('should return success message', () => {
@@ -75,7 +71,14 @@ describe('user', () => {
 
     it('should catch duplicate emails', async () => {
       const dbResponse = await register(userToRegister);
-      expect(dbResponse.msg).to.equal('That email is already linked to an account');
+      expect(dbResponse.msg).to.equal('That email is already linked to an account.');
+    });
+  });
+
+  describe('login', () => {
+    let user;
+    before(() => {
+      user = 'tets';
     });
   });
 

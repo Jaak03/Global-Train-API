@@ -12,7 +12,13 @@ require('../config');
 const { log, isRecent } = require('../utils/logger');
 
 // CONTROLLERS
-const { register } = require('../controllers/register');
+const {
+  register,
+  login: {
+    findUserInDatabase,
+    checkPassword,
+  },
+} = require('../controllers');
 
 // MODELS
 const { UserSchema } = require('../models/schemas/user');
@@ -33,6 +39,10 @@ module.exports = {
   },
   controllers: {
     register,
+    login: {
+      findUserInDatabase,
+      checkPassword,
+    },
   },
   models: {
     UserModel: mongoose.model('User', UserSchema),
