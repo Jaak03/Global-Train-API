@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "List of lambda functions to serve as the API for the Global Train API.",
   "scripts": {
     "test": "mocha tests/",
