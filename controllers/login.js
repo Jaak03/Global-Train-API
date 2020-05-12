@@ -12,6 +12,11 @@ async function findUserInDatabase(email) {
   );
 }
 
+/**
+ * Encrypt and check whether the password entered by the user matches.
+ * @param {string} attemptedPassword String password that was entered by user.
+ * @param {object} userAuth User document that matches the email from user.
+ */
 function checkPassword(attemptedPassword, userAuth) {
   // Check that passwords are not null and match
   if (attemptedPassword

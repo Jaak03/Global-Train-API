@@ -7,7 +7,7 @@ const {
   controllers: {
     register,
     login: {
-      // checkPassword,
+      checkPassword,
       findUserInDatabase,
     },
   },
@@ -100,6 +100,23 @@ describe('user', () => {
 
     it('token should be string', () => {
       expect(typeof token).to.equal('string');
+    });
+  });
+
+  describe('checkPassword', () => {
+    it('expect a boolean response', () => {
+      const response = checkPassword();
+      expect(typeof response).to.equal('boolean');
+    });
+
+    it('expect a wrong password attempt to return false', () => {
+      const response = checkPassword('wrong', user);
+      expect(response).to.be.false;
+    });
+
+    it('expect a correct password attempt to return true', () => {
+      const response = checkPassword('234982hruhwfkjwer123', user);
+      expect(response).to.be.true;
     });
   });
 

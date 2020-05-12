@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const keys = require('../.env/keys');
 
+const EXPIRATION_PERIOD_IN_DAYS = 7;
+
 function createSalt() {
   return crypto.randomBytes(32).toString('hex').toUpperCase();
 }
@@ -17,7 +19,7 @@ const signOptions = {
   issuer: 'amazonaws.com',
   subject: 'Global-Train',
   audience: 'https://dj0yz8ziq0.execute-api.us-east-1.amazonaws.com',
-  expiresIn: '12h',
+  expiresIn: `${24 * EXPIRATION_PERIOD_IN_DAYS}h`,
   algorithm: 'RS256',
 };
 
