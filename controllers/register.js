@@ -15,12 +15,12 @@ async function register(user) {
     await UserModel.insertMany(newUser);
     return {
       msg: 'Successfully registered new user.',
-      user,
+      email: user.email,
     };
   } catch (e) {
     if (e.code === 11000) {
       return {
-        msg: 'That email is already linked to an account',
+        msg: 'That email is already linked to an account.',
       };
     }
 
