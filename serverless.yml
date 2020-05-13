@@ -20,6 +20,10 @@ package:
   include:
     - "./node_modules/**"
     - ".env/**"
+  exclude:
+    - "./node_modules/chai/**"
+    - "./node_modules/eslint*"
+    - "./tests/**"
 
 functions:
 
