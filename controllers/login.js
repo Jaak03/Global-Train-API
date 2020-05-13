@@ -4,7 +4,7 @@ const { UserSchema } = require('../models/schemas/user');
 
 const UserModel = mongoose.model('User', UserSchema);
 
-const { computeHash } = require('../helpers/auth');
+const { computeHash, createToken } = require('../helpers/auth');
 
 async function findUserInDatabase(email) {
   return UserModel.findOne(
@@ -29,7 +29,21 @@ function checkPassword(attemptedPassword, userAuth) {
   return false;
 }
 
+async function login(user) {
+  const userDoc = await findUserInDatabase(user.email);
+  if (checkPassword(user.password, userDoc)) {
+    return {
+      token: createToken(userDoc),
+      msg: 'Succesfully logged in.',
+    };
+  }
+  return {
+    msg: 'Could not log in user for the given credentials.',
+  };
+}
+
 module.exports = {
   checkPassword,
   findUserInDatabase,
+  login,
 };

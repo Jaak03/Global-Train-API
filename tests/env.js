@@ -17,6 +17,7 @@ const {
   login: {
     findUserInDatabase,
     checkPassword,
+    login,
   },
 } = require('../controllers');
 
@@ -43,6 +44,7 @@ module.exports = {
     login: {
       findUserInDatabase,
       checkPassword,
+      login,
     },
   },
   models: {

@@ -9,6 +9,7 @@ const {
     login: {
       checkPassword,
       findUserInDatabase,
+      login,
     },
   },
   helpers: {
@@ -23,7 +24,7 @@ const {
   },
 } = require('../env');
 
-const { userToRegister } = require('./args');
+const { userToRegister, validLoginDetails } = require('./args');
 
 describe('user', () => {
   let salt;
@@ -117,6 +118,23 @@ describe('user', () => {
     it('expect a correct password attempt to return true', () => {
       const response = checkPassword('234982hruhwfkjwer123', user);
       expect(response).to.be.true;
+    });
+  });
+
+  describe('login', () => {
+    it('successfully login valid user', async () => {
+      const response = await login(validLoginDetails);
+      expect(response.msg).to.equal('Succesfully logged in.');
+      expect(response).to.have.property('token');
+    });
+
+    it('failed to login user for invalid credentials', async () => {
+      const response = await login({
+        email: validLoginDetails.email,
+        password: 'wrong',
+      });
+      expect(response.msg).to.equal('Could not log in user for the given credentials.');
+      expect(response).to.not.have.property('token');
     });
   });
 
