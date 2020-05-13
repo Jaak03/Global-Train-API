@@ -12,7 +12,15 @@ async function register(user) {
     newUser.salt = createSalt();
     newUser.password = computeHash(newUser.password, newUser.salt);
 
-    await UserModel.insertMany(newUser);
+    await UserModel.insertMany({
+      password: newUser.password,
+      salt: newUser.salt,
+      email: newUser.email,
+      gender: newUser.gender,
+      settings: {
+        sessions: [],
+      },
+    });
     return {
       msg: 'Successfully registered new user.',
       email: user.email,

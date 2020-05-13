@@ -29,6 +29,10 @@ function checkPassword(attemptedPassword, userAuth) {
   return false;
 }
 
+/**
+ * Login functino to combine the login process.
+ * @param {object} user Object that containts the login attempt password and email.
+ */
 async function login(user) {
   const userDoc = await findUserInDatabase(user.email);
   if (checkPassword(user.password, userDoc)) {
