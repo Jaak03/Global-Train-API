@@ -21,6 +21,7 @@ async function register(user) {
         sessions: [],
       },
     });
+
     return {
       msg: 'Successfully registered new user.',
       email: user.email,

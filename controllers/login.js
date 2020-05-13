@@ -35,6 +35,7 @@ function checkPassword(attemptedPassword, userAuth) {
  */
 async function login(user) {
   const userDoc = await findUserInDatabase(user.email);
+  console.log(user);
   if (checkPassword(user.password, userDoc)) {
     return {
       token: createToken(userDoc),

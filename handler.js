@@ -1,7 +1,7 @@
 const { log } = require('./utils/logger');
 
 const { hello } = require('./handlers/hello');
-const { register, login } = require('./handlers/user');
+const { register, login: { login } } = require('./handlers/user');
 
 // Connection to the database.
 require('./config');
