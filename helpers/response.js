@@ -1,4 +1,4 @@
-function wrap(response) {
+function wrapForCors(response) {
   return {
     statusCode: 200,
     headers: {
@@ -10,5 +10,5 @@ function wrap(response) {
 }
 
 module.exports = {
-  wrap,
+  wrapForCors,
 };

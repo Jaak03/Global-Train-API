@@ -5,9 +5,9 @@ const { createSalt, computeHash } = require('../helpers/auth');
 
 const UserModel = mongoose.model('User', UserSchema);
 
-async function register(user) {
+async function register(event) {
   try {
-    const newUser = user;
+    const newUser = event.body;
 
     newUser.salt = createSalt();
     newUser.password = computeHash(newUser.password, newUser.salt);

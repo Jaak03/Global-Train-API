@@ -26,6 +26,7 @@ const { UserSchema } = require('../models/schemas/user');
 
 // HELPERS
 const { createSalt, computeHash, createToken } = require('../helpers/auth');
+const { wrapForCors } = require('../helpers/response');
 
 module.exports = {
   utils: {
@@ -37,6 +38,9 @@ module.exports = {
       createSalt,
       computeHash,
       createToken,
+    },
+    response: {
+      wrapForCors,
     },
   },
   controllers: {
