@@ -5,9 +5,11 @@
   "scripts": {
     "test": "mocha tests/",
     "hello": "sls invoke -f test",
+    "deploy": "sh ./scripts/deploy.sh",
     "hello:local": "sls invoke local -f test",
     "register:local": "sls invoke local -f register -p ./dummy-data/register.json",
-    "login:local": "sls invoke local -f login -p ./dummy-data/login.json"
+    "login:local": "sls invoke local -f login -p ./dummy-data/login.json",
+    "login": "sls invoke -f login -p ./dummy-data/login.json"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
