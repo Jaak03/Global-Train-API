@@ -5,7 +5,7 @@ const { UserSchema } = require('../models/schemas/user');
 const UserModel = mongoose.model('User', UserSchema);
 
 const { computeHash, createToken } = require('../helpers/auth');
-const { wrap } = require('../helpers/response');
+const { wrapForCors } = require('../helpers/response');
 
 async function findUserInDatabase(email) {
   return UserModel.findOne(
@@ -36,13 +36,13 @@ function checkPassword(attemptedPassword, userAuth) {
  */
 async function login(event) {
   const userDoc = await findUserInDatabase(event.body.email);
-  if (checkPassword(user.password, userDoc)) {
-    return {
+  if (checkPassword(event.body.password, userDoc)) {
+    return wrapForCors({
       token: createToken(userDoc),
       msg: 'Succesfully logged in.',
-    };
+    });
   }
-  return wrap({
+  return wrapForCors({
     msg: 'Could not log in user for the given credentials.',
   });
 }

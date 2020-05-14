@@ -10,13 +10,18 @@ const {
   },
 } = require('../env');
 
-const {} = require('../')
-
 describe('response', () => {
   describe('wrapForCors', () => {
     it('response should be ok', () => {
       const response = wrapForCors(partial);
-      
+      expect(response).to.be.ok;
+    });
+
+    it('should have added properties', () => {
+      const response = wrapForCors(partial);
+      expect(response).to.have.property('statusCode');
+      expect(response).to.have.property('headers');
+      expect(response).to.have.property('body');
     });
   });
 });

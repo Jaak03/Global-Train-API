@@ -1,12 +1,16 @@
 const userToRegister = {
-  password: '234982hruhwfkjwer123',
-  gender: 'm',
-  email: 'asds4t6w@asadf.com',
+  body: {
+    password: '234982hruhwfkjwer123',
+    gender: 'm',
+    email: 'asds4t6w@asadf.com',
+  }
 };
 
 const validLoginDetails = {
-  email: userToRegister.email,
-  password: userToRegister.password,
+  body: {
+    email: userToRegister.body.email,
+    password: userToRegister.body.password,
+  },
 };
 
 module.exports = {

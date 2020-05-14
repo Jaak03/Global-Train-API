@@ -69,22 +69,22 @@ describe('user', () => {
     });
 
     it('should return new user email', () => {
-      expect(response).to.have.property('email');
+      expect(JSON.parse(response.body)).to.have.property('email');
     });
 
     it('should return success message', () => {
-      expect(response.msg).to.equal('Successfully registered new user.');
+      expect(JSON.parse(response.body).msg).to.equal('Successfully registered new user.');
     });
 
     it('should catch duplicate emails', async () => {
       const dbResponse = await register(userToRegister);
-      expect(dbResponse.msg).to.equal('That email is already linked to an account.');
+      expect(JSON.parse(dbResponse.body).msg).to.equal('That email is already linked to an account.');
     });
   });
 
   describe('findUserInDatabase', () => {
     it('find user based on email', async () => {
-      user = await findUserInDatabase(userToRegister.email);
+      user = await findUserInDatabase(userToRegister.body.email);
       expect(user).to.have.property('_id');
     });
   });
@@ -124,24 +124,26 @@ describe('user', () => {
   describe('login', () => {
     it('successfully login valid user', async () => {
       const response = await login(validLoginDetails);
-      expect(response.msg).to.equal('Succesfully logged in.');
-      expect(response).to.have.property('token');
+      expect(JSON.parse(response.body).msg).to.equal('Succesfully logged in.');
+      expect(JSON.parse(response.body)).to.have.property('token');
     });
 
     it('failed to login user for invalid credentials', async () => {
       const response = await login({
-        email: validLoginDetails.email,
-        password: 'wrong',
+        body: {
+          email: validLoginDetails.body.email,
+          password: 'wrong',
+        }
       });
-      expect(response.msg).to.equal('Could not log in user for the given credentials.');
-      expect(response).to.not.have.property('token');
+      expect(JSON.parse(response.body).msg).to.equal('Could not log in user for the given credentials.');
+      expect(JSON.parse(response.body)).to.not.have.property('token');
     });
   });
 
   describe('cleaning up', () => {
     it('deleted test user from database', async () => {
       const dbResponse = await UserModel.deleteMany({
-        email: userToRegister.email,
+        email: userToRegister.body.email,
       });
 
       expect(dbResponse.ok).to.be.equal(1);

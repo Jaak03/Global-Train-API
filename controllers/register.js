@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const { wrapForCors } = require('../helpers/response');
+
 const { UserSchema } = require('../models/schemas/user');
 const { createSalt, computeHash } = require('../helpers/auth');
 
@@ -11,7 +13,6 @@ async function register(event) {
 
     newUser.salt = createSalt();
     newUser.password = computeHash(newUser.password, newUser.salt);
-
     await UserModel.insertMany({
       password: newUser.password,
       salt: newUser.salt,
@@ -22,20 +23,20 @@ async function register(event) {
       },
     });
 
-    return {
+    return wrapForCors({
       msg: 'Successfully registered new user.',
-      email: user.email,
-    };
+      email: newUser.email,
+    });
   } catch (e) {
     if (e.code === 11000) {
-      return {
+      return wrapForCors({
         msg: 'That email is already linked to an account.',
-      };
+      });
     }
 
-    return {
+    return wrapForCors({
       msg: 'Could not register new user.',
-    };
+    });
   }
 }
 
