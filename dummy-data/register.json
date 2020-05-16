@@ -1,6 +1,8 @@
 {
-  "username": "jaak",
-  "password": "123l42",
-  "gender": "m",
-  "email": "jaak@toets.com"
+  "body": {
+    "username": "jaak",
+    "password": "123l42",
+    "gender": 1,
+    "email": "jaak@toets.com"
+  }
 }

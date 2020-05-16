@@ -1,3 +1,7 @@
+/**
+ * To conform to cors standards, this function wraps the response body in the necessary cors headers.
+ * @param {object} response Body to wrap in cors headers
+ */
 function wrapForCors(response) {
   return {
     statusCode: 200,

@@ -4,7 +4,7 @@ const DIF = 24;
 
 /**
  * Prints message only if the date given is with DIF hours of the current date.
- * @param {date} date 
+ * @param {date} date Date of the write request.
  */
 function isRecent() {
   return moment(process.env.logDate).isSameOrAfter(moment().subtract(DIF, 'hours'))
@@ -13,14 +13,14 @@ function isRecent() {
 
 /**
  * Logs the message to the console if isRecent().
- * @param {string} message 
+ * @param {string} message Message that needs to be printed to stdio.
  */
 function log(message) {
-  if(process.env.IS_LOCAL === 'true') console.log(message)
-  else if(isRecent()) console.log(message);
+  if (process.env.IS_LOCAL === 'true') console.log(message);
+  else if (isRecent()) console.log(message);
 }
 
 module.exports = {
   isRecent,
-  log
+  log,
 };

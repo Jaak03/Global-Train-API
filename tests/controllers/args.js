@@ -1,7 +1,7 @@
 const userToRegister = {
   body: {
     password: '234982hruhwfkjwer123',
-    gender: 'm',
+    gender: 0,
     email: 'asds4t6w@asadf.com',
   }
 };

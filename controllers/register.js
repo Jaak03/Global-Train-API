@@ -5,19 +5,24 @@ const { wrapForCors } = require('../helpers/response');
 const { UserSchema } = require('../models/schemas/user');
 const { createSalt, computeHash } = require('../helpers/auth');
 
+const { log } = require('../utils/logger');
+
 const UserModel = mongoose.model('User', UserSchema);
 
 async function register(event) {
   try {
-    const newUser = event.body;
+    const body = JSON.parse(event.body);
 
-    newUser.salt = createSalt();
-    newUser.password = computeHash(newUser.password, newUser.salt);
+    log(JSON.stringify(body, null, 2));
+
+    body.salt = createSalt();
+    body.password = computeHash(body.password, body.salt);
     await UserModel.insertMany({
-      password: newUser.password,
-      salt: newUser.salt,
-      email: newUser.email,
-      gender: newUser.gender,
+      password: body.password,
+      salt: body.salt,
+      email: body.email,
+      gender: body.gender,
+      age: body.age,
       settings: {
         sessions: [],
       },
@@ -25,7 +30,7 @@ async function register(event) {
 
     return wrapForCors({
       msg: 'Successfully registered new user.',
-      email: newUser.email,
+      email: body.email,
     });
   } catch (e) {
     if (e.code === 11000) {
@@ -34,6 +39,7 @@ async function register(event) {
       });
     }
 
+    log(e.stack);
     return wrapForCors({
       msg: 'Could not register new user.',
     });

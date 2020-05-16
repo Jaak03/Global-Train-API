@@ -11,8 +11,8 @@ provider:
   apiKeys:
     - apiKey0
   environment:
-    log: false
-    logDate: '2020-05-10'
+    log: true
+    logDate: '2020-05-16'
     APIKey: ${secrets:apiKey0}
     MONGO_URI: "mongodb+srv://${secrets:dbUsername}:${secrets:dbPassword}@devcluster-z9ddd.mongodb.net/GlobalTrain"
 

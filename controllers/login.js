@@ -7,6 +7,8 @@ const UserModel = mongoose.model('User', UserSchema);
 const { computeHash, createToken } = require('../helpers/auth');
 const { wrapForCors } = require('../helpers/response');
 
+const { log } = require('../utils/logger');
+
 async function findUserInDatabase(email) {
   return UserModel.findOne(
     { email },
@@ -35,8 +37,12 @@ function checkPassword(attemptedPassword, userAuth) {
  * @param {object} user Object that containts the login attempt password and email.
  */
 async function login(event) {
-  const userDoc = await findUserInDatabase(event.body.email);
-  if (checkPassword(event.body.password, userDoc)) {
+  const body = JSON.parse(event.body);
+
+  log(body);
+
+  const userDoc = await findUserInDatabase(body.email);
+  if (checkPassword(body.password, userDoc)) {
     return wrapForCors({
       token: createToken(userDoc),
       msg: 'Succesfully logged in.',
