@@ -41,16 +41,28 @@ async function login(event) {
 
   log(body);
 
-  const userDoc = await findUserInDatabase(body.email);
-  if (checkPassword(body.password, userDoc)) {
+  try {
+    const userDoc = await findUserInDatabase(body.email);
+    if (checkPassword(body.password, userDoc)) {
+      return wrapForCors({
+        token: createToken(userDoc),
+        msg: 'Succesfully logged in.',
+        user: {
+          email: userDoc.email,
+          settings: userDoc.settings,
+          gender: userDoc.gender,
+        },
+      });
+    }
     return wrapForCors({
-      token: createToken(userDoc),
-      msg: 'Succesfully logged in.',
+      msg: 'Could not log in user for the given credentials.',
+    });
+  } catch (e) {
+    log(e);
+    return wrapForCors({
+      msg: 'Could not log in user for the given credentials.',
     });
   }
-  return wrapForCors({
-    msg: 'Could not log in user for the given credentials.',
-  });
 }
 
 module.exports = {

@@ -19,7 +19,7 @@ const signOptions = {
   issuer: 'amazonaws.com',
   subject: 'Global-Train',
   audience: 'https://dj0yz8ziq0.execute-api.us-east-1.amazonaws.com',
-  expiresIn: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * EXPIRATION_PERIOD_IN_DAYS),
+  expiresIn: 1000 * 60 * 60 * 24 * EXPIRATION_PERIOD_IN_DAYS,
   algorithm: 'RS256',
 };
 
