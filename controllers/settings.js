@@ -1,35 +1,29 @@
+/* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 
 const { UserSchema } = require('../models/schemas/user');
 
 const UserModel = mongoose.model('User', UserSchema);
 
-const { computeHash, createToken } = require('../helpers/auth');
+const { decodeAndVerifyToken } = require('../helpers/auth');
 const { wrapForCors } = require('../helpers/response');
 
 const { log } = require('../utils/logger');
 
-async function findUserInDatabase(email) {
-  return UserModel.findOne(
-    { email },
+async function updateUserSettings(body, settings) {
+  const response = await UserModel.findOneAndUpdate(
+    { email: body.email },
+    {
+      $set: {
+        settings,
+      },
+    },
   );
-}
-
-/**
- * Encrypt and check whether the password entered by the user matches.
- * @param {string} attemptedPassword String password that was entered by user.
- * @param {object} userAuth User document that matches the email from user.
- */
-function checkPassword(attemptedPassword, userAuth) {
-  // Check that passwords are not null and match
-  if (attemptedPassword
-    && userAuth.password
-    && userAuth.salt
-    && (userAuth.password === computeHash(attemptedPassword, userAuth.salt))
-  ) {
-    return true;
+  log({ body, response });
+  if (response._id === body._id) {
+    return 'Successfully updated user settings.';
   }
-  return false;
+  return 'Could not update user settings.';
 }
 
 /**
@@ -38,11 +32,21 @@ function checkPassword(attemptedPassword, userAuth) {
  * user email to update.
  */
 async function updateSettings(event) {
-  return wrapForCors(event);
+  const auth = decodeAndVerifyToken(event.headers.Authorization);
+
+  const body = JSON.parse(event.body);
+  const { settings = null } = body || { settings: null };
+
+  if (!settings) return wrapForCors({ msg: 'Could not read settings from request.' });
+
+  if (auth) {
+    const response = await updateUserSettings(auth, settings);
+    return wrapForCors(response);
+  }
+
+  return wrapForCors({ msg: 'Invalid token.' });
 }
 
 module.exports = {
-  checkPassword,
-  findUserInDatabase,
   updateSettings,
 };

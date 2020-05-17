@@ -6,6 +6,9 @@ const UserSchema = new mongoose.Schema({
   password: String,
   salt: String,
   gender: Number,
+  settings: {
+    sessions: Object,
+  },
 });
 
 module.exports = {

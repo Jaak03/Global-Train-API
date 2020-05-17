@@ -1,7 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 const keys = require('../.env/keys');
+
+const { log } = require('../utils/logger');
 
 const EXPIRATION_PERIOD_IN_DAYS = 7;
 
@@ -13,6 +17,19 @@ function computeHash(password, salt) {
   const key = `${salt}${password}`;
   const hash = crypto.createHash('sha512').update(key, 'binary').digest('hex').toUpperCase();
   return hash;
+}
+
+function decodeAndVerifyToken(token) {
+  const payload = jwt.verify(token, keys.public);
+  if (moment(payload.exp * 1000).isAfter(moment())) {
+    return {
+      _id: payload._id,
+      email: payload.email,
+      gender: payload.gender,
+      settings: payload.settings,
+    };
+  }
+  return 0;
 }
 
 const signOptions = {
@@ -38,4 +55,5 @@ module.exports = {
   computeHash,
   createToken,
   signOptions,
+  decodeAndVerifyToken,
 };
