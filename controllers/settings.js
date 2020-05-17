@@ -18,9 +18,12 @@ async function updateUserSettings(body, settings) {
         settings,
       },
     },
+    {
+      new: true,
+    },
   );
   log({ body, response });
-  if (response._id === body._id) {
+  if (String(response._id) === String(body._id)) {
     return 'Successfully updated user settings.';
   }
   return 'Could not update user settings.';
