@@ -11,8 +11,8 @@ provider:
   apiKeys:
     - apiKey0
   environment:
-    log: false
-    logDate: '2020-05-16'
+    log: true
+    logDate: '2020-05-17'
     APIKey: ${secrets:apiKey0}
     MONGO_URI: "mongodb+srv://${secrets:dbUsername}:${secrets:dbPassword}@devcluster-z9ddd.mongodb.net/GlobalTrain"
 
@@ -66,12 +66,7 @@ functions:
       - http:
           path: user/settings
           method: post
-          cors:
-            origin: '*'
-            headers:
-              - Content-Type
-              - Authorization
-              - X-Api-Key
+          cors: true
           private: true
 
 #    The following are a few example events you can configure

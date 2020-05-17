@@ -9,6 +9,7 @@
     "hello:local": "sls invoke local -f test",
     "register:local": "sls invoke local -f register -p ./dummy-data/register.json",
     "login:local": "sls invoke local -f login -p ./dummy-data/login.json",
+    "settings:local": "sls invoke local -f updateSettings -p ./dummy-data/settings.json",
     "login": "sls invoke -f login -p ./dummy-data/login.json"
   },
   "dependencies": {

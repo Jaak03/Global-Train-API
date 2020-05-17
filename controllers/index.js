@@ -1,5 +1,6 @@
 const { register } = require('./register');
 const { findUserInDatabase, checkPassword, login } = require('./login');
+const { updateSettings } = require('./settings');
 
 module.exports = {
   register,
@@ -7,5 +8,8 @@ module.exports = {
     findUserInDatabase,
     checkPassword,
     login,
+  },
+  settings: {
+    updateSettings,
   },
 };
