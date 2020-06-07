@@ -24,7 +24,28 @@ async function register(event) {
       gender: body.gender,
       age: body.age,
       settings: {
-        sessions: [],
+        sessions: [
+          {
+            id: 0,
+            time: '06:00:00',
+            active: false,
+          },
+          {
+            id: 1,
+            time: '08:00:00',
+            active: false,
+          },
+          {
+            id: 2,
+            time: '18:00:00',
+            active: false,
+          },
+          {
+            id: 3,
+            time: '20:00:00',
+            active: false,
+          },
+        ],
       },
     });
 

@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
 
+const session = new mongoose.Schema({
+  _id: {
+    type: Number,
+    unique: true,
+  },
+  time: String,
+  active: Boolean,
+});
+
 const UserSchema = new mongoose.Schema({
   _id: mongoose.Types.ObjectId,
   email: String,
@@ -7,7 +16,7 @@ const UserSchema = new mongoose.Schema({
   salt: String,
   gender: Number,
   settings: {
-    sessions: Object,
+    sessions: [session],
   },
 });
 

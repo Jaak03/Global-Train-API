@@ -39,7 +39,7 @@ functions:
   register:
     handler: handler.register
     memorySize: 256
-    timeout: 3 
+    timeout: 4 
     events:
       - http:
           path: user/register
@@ -49,8 +49,8 @@ functions:
 
   login:
     handler: handler.login
-    memorySize: 128
-    timeout: 2
+    memorySize: 256
+    timeout: 4
     events:
       - http:
           path: user/login
@@ -60,8 +60,8 @@ functions:
 
   updateSettings:
     handler: handler.updateSettings
-    memorySize: 128
-    timeout: 2
+    memorySize: 256
+    timeout: 4 
     events:
       - http:
           path: user/settings

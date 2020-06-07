@@ -24,9 +24,9 @@ async function updateUserSettings(body, settings) {
   );
   log({ body, response });
   if (String(response._id) === String(body._id)) {
-    return 'Successfully updated user settings.';
+    return { msg: 'Successfully updated user settings.' };
   }
-  return 'Could not update user settings.';
+  return { msg: 'Could not update user settings.' };
 }
 
 /**
